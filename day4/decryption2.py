@@ -12,18 +12,51 @@ def test_line(line):
     number = int(sline[-2])
     checksum = sline[-1]
 
-    letters = np.array(sorted(set(name)))[::-1]
+    letters = list(sorted(set(name)))
     lcount = [name.count(l) for l in letters]
-    countsort = np.argsort(lcount)[::-1]
-    code = ''.join(letters[countsort])[:5]
+    ordering = [''] * (max(lcount)+1)
+    
+    for l,c in zip(letters,lcount):
+        ordering[c] += l
+    for i in range(len(ordering)):
+        ordering[i] = sorted(ordering[i])
+    code = ''
+    for word in ordering[::-1]:
+        for c in word:
+            code += c
+            if len(code) >4:
+                break
+        if len(code)>4:
+            break
+    print code
+
     if code == checksum:
-        return number
+        return name, number
     else:
-        return 0
+        return '',0
 
 
+
+def real_name(s, n):
+    print n, s
+    return ''.join([str(unichr((ord(c)-97+n)%26+97)) for c in s])
+    
+
+names = []
+numbers = []
 for line in lines:
-    s+=test_line(line)
+    name, number = test_line(line)
+    if name:
+        s+=number
+        names.append(real_name(name,number))
+        numbers.append(number)
 
 print (s)
+print names
 
+i = names.index('northpoleobjectstorage')
+print numbers[i]
+
+#with open('real_names','w') as outfile:
+    #for n in names:
+        #outfile.write(n+'\n')

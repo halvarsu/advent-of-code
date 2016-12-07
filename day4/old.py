@@ -21,9 +21,9 @@ def test_line(line):
     else:
         return 0
 
-
 for line in lines:
     s+=test_line(line)
 
+print min_length
 print (s)
 
