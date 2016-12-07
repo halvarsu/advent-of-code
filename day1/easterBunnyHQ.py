@@ -20,7 +20,6 @@ for i,c in enumerate(data):
         x+=int(c[1:]) if heading/2 == 0 else -int(c[1:])
     positions[i] = (x,y)
 
-
 print x, y
 print abs(x)+abs(y)
 plt.plot(positions[:,0],positions[:,1])
