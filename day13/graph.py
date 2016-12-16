@@ -4,16 +4,18 @@ class Graph(object):
     """Uses the Node class to traverse the maze from problem 13 of Advent
     Of Code"""
 
-    def __init__(self, inp, target):
+    def __init__(self, inp, target, part):
         """ 
         :inp: the puzzle input, used in node.is_node to find node spaces
         :target: the target node position
+        :part: part 1 or 2 of the puzzle
         """
         
         self._input = inp
         self._target = target
+        self._part = part
         self.nodes = [Node((1,1), value=0, inp = self._input)]
-        self.target_node = Node(target, inp = self._input)
+        self.target_node = Node(self._target, inp = self._input)
 
 
     def __str__(self):
@@ -26,7 +28,10 @@ class Graph(object):
             self.dejkstras(self.nodes)
         except ValueError:
             pass
-        print self.target_node.get_value()
+        if self._part == 1:
+            return self.target_node.get_value()
+        elif self._part == 2:
+            return len(self.nodes)
 
     def dejkstras(self,prev_nodes):
         '''Recursively searches through nodes to find neighboring nodes'''
@@ -35,19 +40,24 @@ class Graph(object):
         for node in prev_nodes:
             links = node.get_links()
             current_val = node.get_value() +1
+            if self._part == 2:
+                if current_val > 50:
+                    break
             self.neighbors = [Node(ID, value= current_val, 
                                 inp=self._input
                              ) for ID in links]
             self.next_nodes += [n for n in self.neighbors if n not in self.next_nodes]
 
-        for i in range(len(self.next_nodes)-1,0,-1):
+        for i in range(len(self.next_nodes)-1,-1,-1):
             new = self.next_nodes[i]
             current_val = new.get_value() +1
 
-            if new == self.target_node:
-                # Breaks out of all the recursiveness when target is found
-                self.target_node.set_value(current_val)
-                raise ValueError
+            if self._part == 1:
+                if new == self.target_node:
+                    # Breaks out of all the recursiveness when target 
+                    # is found
+                    self.target_node.set_value(current_val)
+                    raise ValueError
             if new not in self.nodes:
                 self.nodes.append(new)
             else:
@@ -57,7 +67,10 @@ class Graph(object):
                     self.nodes[old].set_value(current_val)
                 self.next_nodes.pop(self.next_nodes.index(new))
 
-        self.dejkstras(self.next_nodes)
+        if self.next_nodes:
+            self.dejkstras(self.next_nodes) 
+        return 
+
 
 
 
@@ -68,11 +81,11 @@ class Graph(object):
         IDs = [node.get_ID() for node in self.nodes]
         x_vals = [ID[0] for ID in IDs]
         y_vals = [ID[1] for ID in IDs]
-        max_x = max(x_vals)
-        max_y = max(y_vals)
+        max_x = max(x_vals) +2
+        max_y = max(y_vals) +2
         d13 = Day13(inp = self._input)
     
-        board = d13.solve(w = max_x + 1, h = max_y + 1)
+        board = d13.solve(w = max_x , h = max_y)
         shape = board.shape
         sc =  len(str(board.shape[1]))
         s = " "*sc
@@ -91,20 +104,23 @@ class Graph(object):
                 else:
                     s+="#" if board[x,y] else " "
             s+="\n"
-        return s
+        return s[:-1]
 def get_args():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('-t','--test',help='run testvalue',
                         action ='store_true',default=False)
+    parser.add_argument('-p','--part',help='select part',
+                        choices=[1,2],type=int,default=1)
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = get_args()
     if args.test:
-        g = Graph(inp=10, target = (7,4))
+        g = Graph(inp=10, target = (7,4), part = args.part)
     else:
-        g = Graph(inp=1350, target = (31,39))
-    g.build()
+        g = Graph(inp=1350, target = (31,39), part = args.part)
+    num = g.build()
     s1 = g.print_labyrinth()
     print s1
+    print num
