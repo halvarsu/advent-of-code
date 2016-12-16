@@ -1,12 +1,12 @@
 from node import Node
 class Graph(object):
 
-    """grapher"""
+    """Uses the Node class to traverse the maze from problem 13 of Advent
+    Of Code"""
 
     def __init__(self, inp, target):
-        """TODO: to be defined1. 
-        
-        :inp: the puzzle input, used in node.is_node possible nodes
+        """ 
+        :inp: the puzzle input, used in node.is_node to find node spaces
         :target: the target node position
         """
         
