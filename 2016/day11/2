@@ -1,0 +1,113 @@
+import sys
+from os import path
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__)  )  )  )
+from AdventOfCode import *
+import re
+
+class Day11(AdventOfCode):
+
+    """Solves problem 11 of adventofcode.com """
+
+    def __init__(self, filename ='input'):
+        """
+
+        :filename: name of the input-file
+
+        """
+        AdventOfCode.__init__(self, filename = filename, day=11)
+
+        self._filename = filename
+        self.prev_states = []
+
+    def line_prosessor(self, line):
+        # re wont split on '-' ...
+        contents = re.split(r'[ -,]',line.strip('.\n\r'))
+        contains = []
+        elements = {'promethium':'1','cobalt':'2','curium':'3',
+                     'ruthenium':'4','plutonium':'5'}
+        object_type = {'microchip':'M', 'generator':'G'}
+        try:
+            i = contents.index('a')
+            while True:
+                item = contents[i+1:i+3]
+                s = item[0]
+                if '-' in s:
+                    s = elements[s[:s.find('-')]]
+                else:
+                    s = elements[s]
+
+                o = item[1]
+                if '.' in o:
+                    o = object_type[o[:-1]]
+                else:
+                    o = object_type[o]
+
+                contains.append(s+o)
+                i = contents.index('a',i+1)
+        except ValueError:
+            pass
+        return contains
+        
+    def input_prosessor(self, infile):
+        self.data = map(self.line_prosessor, infile)
+        return self.data
+
+
+    def get_state(self,data):
+        return  "".join(["".join(line) for line in data])
+
+    def solve(self,data = None):
+        if not data:
+            data = self.data
+        for line in data[::-1]:
+            print line
+        E = 0
+
+    def check_validity(self,floor):
+        generators, chips = partition(floor,lambda x:x[1]=='G' )
+        if generators:
+            for c in chips:
+                if '{}G'.format(c[0]) not in generators:
+                    return False
+        return True
+
+    def done(self,data):
+        for line in data[1:]:
+            if line:
+                return False
+        return True
+
+
+    def legal_moves(self,data,i, moves):
+        if self.done:
+            self.num_moves.append(moves)
+        state = self.get_state(data)
+        if state in self.prev_states:
+            return 0
+        else:
+            self.prev_states.append(state)
+
+        floor = data[i]
+
+        targets = [j for j in (i-1,i+1) if j in range(len(data))] 
+
+        for item in floor:
+            for j in targets:
+                if check_validity(data[j].append(item)):
+                    legal_moves(data, j, moves+1)
+                data[j.pop(-1)]
+
+
+
+                
+
+
+
+
+
+if __name__ == "__main__":
+    day11 = Day11()
+    data =day11.get_input()
+    print day11.check_validity(data[1])
+
+
