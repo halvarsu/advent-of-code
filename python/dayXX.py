@@ -5,11 +5,11 @@ sys.path.append( path.dirname( path.dirname( path.abspath(__file__)  )  )  )
 from AdventOfCode import AdventOfCode, partition, representsint, sign
 import re
 
-class DayXX(object):
+class DayXX(AdventOfCode):
 
     """Solves day XX from adventOfCode.com. """
 
-    def __init__(self, filename='input', test_file = False):
+    def __init__(self, filename='input', test = False):
         """
 
         :filename: name of the input-file
@@ -40,5 +40,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dayXX = DayXX(test = args.test)
-    print dayXX.solve(part = args.part)
+    print(dayXX.solve(part = args.part))
 

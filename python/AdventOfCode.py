@@ -42,17 +42,20 @@ class AdventOfCode(object):
             filename = self.get_filename()
 
         if not glob.glob(filename):
-            raise(IOError, 'File %s doesnt exist' % filename)
+            raise IOError('File %s doesnt exist' % filename)
             #self.download_input()
         with open(filename) as infile:
             data = self.input_prosessor(infile)
         return data
+
+    def solve(self, part):
+        raise NotImplementedError
     
     def input_prosessor(self, infile):
         """Should prosess input into wanted format.
         example: 
             return map(int,infile)"""
-        raise(NotImplementedError)
+        raise NotImplementedError 
 
 def partition(l, p):
     return reduce(lambda x, y: x[not p(y)].append(y) or x, l, ([], []))
