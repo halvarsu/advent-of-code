@@ -51,8 +51,7 @@ class Day2(AdventOfCode):
             indices = np.where(~np.array( data % rolled ,dtype=bool))
             # could probably remove this for loop
             for index in np.array(indices).T:
-                s+= data[index[0], index[1]] / rolled[index[0],
-                    index[1]]
+                s+= data[index[0], index[1]] / rolled[index[0], index[1]]
         return int(s)
 
         
