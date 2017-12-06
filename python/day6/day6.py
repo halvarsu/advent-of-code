@@ -5,9 +5,9 @@ sys.path.append( path.dirname( path.dirname( path.abspath(__file__)  )  )  )
 from AdventOfCode import AdventOfCode, partition, representsint, sign
 import re
 
-class DayXX(AdventOfCode):
+class Day6(AdventOfCode):
 
-    """Solves day XX from adventOfCode.com. """
+    """Solves day 6 from adventOfCode.com. """
 
     def __init__(self, filename='input', test = False):
         """
@@ -20,18 +20,39 @@ class DayXX(AdventOfCode):
             self._filename = 'test'
         else:
             self._filename = filename
-        AdventOfCode.__init__(self, filename = self._filename, day=XX)
+        AdventOfCode.__init__(self, filename = self._filename, day=6)
         self.registries = {}
 
     def input_prosessor(self, infile):
-        return map(self.line_prosessor, infile)
-
-    def line_prosessor(self, line):
-        return line.split()
+        data = []
+        for d in infile.readline().split():
+            d = d.strip('\t\n')
+            if d:
+                data.append(int(d))
+        return data
 
     def solve(self, part):
         data = self.get_input()
+
+        states = []
+        steps = 0
         print(data)
+        while data not in states:
+            steps+=1
+            states.append(data.copy())
+            max_index = data.index(max(data))
+            val = data[max_index] 
+            data[max_index] = 0
+            for i in range(val):
+                data[(i+max_index+1)%len(data)] += 1
+            print(data)
+
+        print("Part 1 solution: ", steps)
+        print("Part 2 solution: ", steps - states.index(data))
+
+
+
+
 
 if __name__ == "__main__":
     import argparse
@@ -42,6 +63,6 @@ if __name__ == "__main__":
             choices =[1,2],default=1, type=int)
     args = parser.parse_args()
 
-    dayXX = DayXX(test = args.test)
-    print(dayXX.solve(part = args.part))
+    day6 = Day6(test = args.test)
+    print(day6.solve(part = args.part))
 
