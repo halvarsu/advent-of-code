@@ -47,9 +47,6 @@ class Day9(AdventOfCode):
                 else:
                     removed += 1
                 continue
-                
-
-
             if char == "{":
                 group_nesting += 1
             elif char == "}" and group_nesting > 0:

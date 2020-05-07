@@ -43,8 +43,13 @@ class Day3(object):
 
     def solve(self, part):
         data = self.get_input()
-        self.part1(data)
-        self.part2(data)
+        if part == 0:
+            self.part1(data)
+            self.part2(data)
+        elif part == 1:
+            self.part1(data)
+        elif part == 2:
+            self.part2(data)
         return 'done'
 
     def part1(self,data):
@@ -52,7 +57,6 @@ class Day3(object):
                 self.radial_distance(data) + self.angular_distance(data))
         return
 
-    
 
     def get_pos(self,i):
         if i == 1:
@@ -76,7 +80,6 @@ class Day3(object):
         elif quadrant == 3:
             x = pos - level + 1
             y = -maxpos
-        print("heRI", i,x,y,"|",angle, quadrant, pos)
         return int(x), int(y)
 
 
