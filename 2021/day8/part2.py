@@ -40,17 +40,6 @@ with open(file) as infile:
 
 # lengths = {_1:2, 2:5, 3:5, _4:4, 5:5, 6:6, _7:3, _8:7, 9:6}
 
-# 1: only with length 2, gives c & f
-# 0&6&9: only with length 6.
-# - one has just f. this is 6. this gives c and f as well
-# 7: only with length 3. This gives a
-# 6: only with length 6 without c
-# 9: only with length 9 left
-# 2: only with length 5 without f
-# 5: only with length 5 without c
-# 3: only with length 5 left
-# 4: only with length 4
-# 8: only with length 7
 
 def get_symbols(signal):
     signal = np.array(signal)
