@@ -1,0 +1,253 @@
+inp w #####################
+mul x 0  # x=0
+add x z  # x=0
+mod x 26 # x=0
+div z 1  # z=0
+add x 12 # x=12
+eql x w  # x=w==12
+eql x 0  # x=w!=12 > w=12 går ikke! > x=1
+mul y 0  # y=0
+add y 25 # y=25
+mul y x  # y=25*1
+add y 1  # y=2
+mul z y  # z=0*2
+mul y 0  # y=0
+add y w  # y=w
+add y 15 # y=w+15
+mul y x  # y=w+15
+add z y  # z=w+15
+inp w ##################### y=w+15,z=w+15
+mul x 0   # x=0
+add x z   # x=w+15
+mod x 26  # x=w+15 (w<=9 -> x<=24)
+div z 1   # z=1
+add x 14  #                   changed from above, 12->14
+eql x w
+eql x 0
+mul y 0   # y=0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0   # y=0
+add y w
+add y 12 # changed from above, 15->12
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 11
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 15
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -9
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 12
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -7
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 15
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 11
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -1
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 11
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -16
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 15
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 11
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 10
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -15
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 10
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 0
+mul y x
+add z y
+inp w #####################
+mul x 0
+add x z
+mod x 26
+div z 1  # B
+add x 12 # A
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 0 # C
+mul y x
+add z y
+inp w ##################### z=(z_//C)*(25*(w!=(z_%26+A))+1) + (w+C)*(w!=(z_%26))
+mul x 0   # x=0
+add x z   # x=z_
+mod x 26  # x=z_%26
+div z 26  # z=z_//26
+add x -4  # x=z_%26 - 4
+eql x w   # x=(z_%26 - 4) == w
+eql x 0   # x=(z_%26 - 4) != w
+mul y 0   # y=0
+add y 25  # y=25
+mul y x   # y=25*((z_%26 - 4) != w)
+add y 1   # y=25*((z_%26 - 4) != w) + 1
+mul z y   # z=(z_//26)*(25*((z_%26 - 4) != w) + 1)
+mul y 0   # y=0
+add y w   # y=w
+add y 15  # y=w+15
+mul y x   # y=(w+15)*((z_%26 - 4) != w)
+add z y   # z=(z_//26)*(25*(w!=(z_%26 - 4)) + 1) + (w+15)*(w!=(z_%26 - 4)) # kun < 10 dersom
+inp w ######################
+mul x 0   # reset x
+add x z   # x=z
+mod x 26  # x=z%26
+div z 26  # z=z//26
+add x 0   # x=z%26
+eql x w   # x=w==(z%26)
+eql x 0   # x=w!=(z%26)
+mul y 0   # reset y
+add y 25  # y=25
+mul y x   # y=25*(w!=(z%26))
+add y 1   # y=25*(w!=(z%26))+1
+mul z y   # z=z_*(25*(w!=(z%26))+1)
+mul y 0   # y=0
+add y w   # y=w
+add y 15  # y=w+15
+mul y x   # y=(w+15)*(w!=(z%26))
+add z y   # z=(z_//26)*(25*(w!=(z_%26+0))+1) + (w+15)*(w!=(z_%26)) ## kun null dersom z < 10
+ 
