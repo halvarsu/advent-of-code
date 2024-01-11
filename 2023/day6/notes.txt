@@ -1,0 +1,19 @@
+
+
+
+x = (T - t0) * v
+v = t0
+x = T t0 - t0^2 > r
+    - t0^2 + T t0 - r > 0
+t0^2 - T t0 + r < 0
+
+I.e., x crosses r when t0 is
+t_c = (T +- sqrt(T^2 - 4r)) / 2
+
+Testing t0 = T, which is in the middle of the two solutions,
+gives x = 0 < r.
+
+I.e. solutions are given by integer values of t0 in the interval
+(T - sqrt(T^2 - 4r)) / 2 < t0 < (T + sqrt(T^2 - 4r)) / 2
+
+
