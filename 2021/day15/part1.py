@@ -35,6 +35,7 @@ def solve(risks):
     h = make_h(end)
     print(h(start))
     print_risks(risks)
+    
 
     # A* algorithm, shamelessly taken from wikipedia
     open_set = set((start,))
